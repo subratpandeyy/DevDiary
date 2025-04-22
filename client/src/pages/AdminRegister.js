@@ -16,7 +16,7 @@ import { login } from '../store/slices/authSlice';
 const AdminRegister = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated, error, loading } = useSelector((state) => state.auth);
+  const { isAuthenticated, loading } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
     username: '',
