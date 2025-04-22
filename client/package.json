@@ -9,7 +9,7 @@
     "@mui/material": "^5.14.3",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
-    "canvas": "^2.11.2",
+  "canvas": "^2.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-quill": "^2.0.0",
