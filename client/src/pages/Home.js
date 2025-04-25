@@ -26,7 +26,6 @@ const Home = () => {
   const { posts, loading, error } = useSelector((state) => state.posts);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredPosts, setFilteredPosts] = useState([]);
-  const [showFilters] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [allTags, setAllTags] = useState([]);
 
@@ -36,37 +35,27 @@ const Home = () => {
 
   useEffect(() => {
     if (posts.length > 0) {
-      // Extract all unique tags
       const tags = [...new Set(posts.flatMap(post => post.tags || []))];
       setAllTags(tags);
-      
-      // Initially show all posts
       setFilteredPosts(posts);
     }
   }, [posts]);
 
   useEffect(() => {
-    if (posts.length > 0) {
-      let filtered = [...posts];
-      
-      // Filter by search term
-      if (searchTerm) {
-        filtered = filtered.filter(post => 
-          post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          post.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          (post.tags && post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())))
-        );
-      }
-      
-      // Filter by selected tags
-      if (selectedTags.length > 0) {
-        filtered = filtered.filter(post => 
-          post.tags && selectedTags.every(tag => post.tags.includes(tag))
-        );
-      }
-      
-      setFilteredPosts(filtered);
+    let filtered = [...posts];
+    if (searchTerm) {
+      filtered = filtered.filter(post =>
+        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (post.tags && post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())))
+      );
     }
+    if (selectedTags.length > 0) {
+      filtered = filtered.filter(post =>
+        post.tags && selectedTags.every(tag => post.tags.includes(tag))
+      );
+    }
+    setFilteredPosts(filtered);
   }, [searchTerm, selectedTags, posts]);
 
   const handleSearchChange = (e) => {
@@ -74,11 +63,9 @@ const Home = () => {
   };
 
   const handleTagToggle = (tag) => {
-    if (selectedTags.includes(tag)) {
-      setSelectedTags(selectedTags.filter(t => t !== tag));
-    } else {
-      setSelectedTags([...selectedTags, tag]);
-    }
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    );
   };
 
   const clearFilters = () => {
@@ -104,44 +91,26 @@ const Home = () => {
 
   return (
     <>
-    <Container maxWidth="lg" sx={{ mt: {xs: 2, sm: 4}, mb: { xs: 4, sm: 6 }, px: { xs: 2, sm: 3, md: 4 } }}>
-      <Typography variant="h3" component="h1" gutterBottom 
-      sx={{
-        background: `linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%)`,
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
-        fontSize: '2rem',
-        fontWeight: 700,
-        display: 'inline-block',
-      }}
-      >
-        Dev Diary
-      </Typography>
+      <Container maxWidth="lg" sx={{ mt: { xs: 2, sm: 4 }, mb: { xs: 4, sm: 6 }, px: { xs: 2, sm: 3, md: 4 } }}>
+        <Typography
+          variant="h3"
+          component="h1"
+          gutterBottom
+          sx={{
+            background: `linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%)`,
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontSize: '2rem',
+            fontWeight: 700,
+            display: 'inline-block',
+          }}
+        >
+          Dev Diary
+        </Typography>
 
-      <Box sx={{ mb: 4 }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              placeholder="Search posts..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Grid>
-        </Grid>
-
-        {showFilters && (
-          <Box sx={{ mt: 2, p: 2, border: '1px solid', borderColor: 'divider', borderRadius: 1 }}>
-            <Typography variant="subtitle1" gutterBottom>
-              Filter by Tags:
-            </Typography>
+        <Box sx={{ mb: 4 }}>
+          <Box>
+            
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
               {allTags.map((tag) => (
                 <Chip
@@ -153,94 +122,102 @@ const Home = () => {
                 />
               ))}
             </Box>
-            {(searchTerm || selectedTags.length > 0) && (
-              <Button 
-                variant="text" 
-                color="primary" 
-                onClick={clearFilters}
-                sx={{ mt: 1 }}
-              >
-                Clear Filters
-              </Button>
-            )}
-          </Box>
-        )}
-
-        {(searchTerm || selectedTags.length > 0) && (
-          <Box sx={{ mt: 2, mb: 2 }}>
-            <Typography variant="body2" color="text.secondary">
-              Showing {filteredPosts.length} of {posts.length} posts
-            </Typography>
-          </Box>
-        )}
-      </Box>
-
-      {filteredPosts.length === 0 ? (
-        <Alert severity="info">No posts match your search criteria.</Alert>
-      ) : (
-        <Grid container spacing={4} >
-          {filteredPosts.map((post) => (
-            <Grid item xs={12} sm={6} md={4} key={post._id}>
-              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', borderRadius: '5px' }}>
-                {post.media && post.media.length > 0 && post.media[0].type === 'image' && (
-                  <CardMedia
-                    component="img"
-                    height="200"
-                    loading='lazy'
-                    image={post.media[0].url}
-                    alt={post.title}
-                  />
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  placeholder="Search posts..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                {(searchTerm || selectedTags.length > 0) && (
+                  <Button variant="text" color="primary" onClick={clearFilters}>
+                    Clear Filters
+                  </Button>
                 )}
-                <CardActionArea component={RouterLink} to={`/posts/${post._id}`}>
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {post.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                      By {post.author?.username} • {new Date(post.createdAt).toLocaleDateString()}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        display: '-webkit-box',
-                        WebkitLineClamp: 3,
-                        WebkitBoxOrient: 'vertical',
-                      }}
-                      dangerouslySetInnerHTML={{
-                        __html: post.content.substring(0, 150) + '...',
-                      }}
-                    />
-                    {post.tags && post.tags.length > 0 && (
-                      <Box sx={{ mt: 2 }}>
-                        {post.tags.slice(0, 3).map((tag) => (
-                          <Chip
-                            key={tag}
-                            label={tag}
-                            size="small"
-                            sx={{ mr: 1, mb: 1 }}
-                          />
-                        ))}
-                        {post.tags.length > 3 && (
-                          <Typography variant="caption" color="text.secondary">
-                            +{post.tags.length - 3} more
-                          </Typography>
-                        )}
-                      </Box>
-                    )}
-                  </CardContent>
-                </CardActionArea>
-              </Card>
+              </Grid>
             </Grid>
-          ))}
-        </Grid>
-      )}
-    </Container>
-    <PeopleCards />
+          </Box>
+
+          {(searchTerm || selectedTags.length > 0) && (
+            <Box sx={{ mt: 2, mb: 2 }}>
+              <Typography variant="body2" color="text.secondary">
+                Showing {filteredPosts.length} of {posts.length} posts
+              </Typography>
+            </Box>
+          )}
+        </Box>
+
+        {filteredPosts.length === 0 ? (
+          <Alert severity="info">No posts match your search criteria.</Alert>
+        ) : (
+          <Grid container spacing={4}>
+            {filteredPosts.map((post) => (
+              <Grid item xs={12} sm={6} md={4} key={post._id}>
+                <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', borderRadius: '5px' }}>
+                  {post.media?.[0]?.type === 'image' && (
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      loading="lazy"
+                      image={post.media[0].url}
+                      alt={post.title}
+                    />
+                  )}
+                  <CardActionArea component={RouterLink} to={`/posts/${post._id}`}>
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {post.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                        By {post.author?.username} • {new Date(post.createdAt).toLocaleDateString()}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: 'vertical',
+                        }}
+                        dangerouslySetInnerHTML={{
+                          __html: post.content.substring(0, 150) + '...',
+                        }}
+                      />
+                      {post.tags && post.tags.length > 0 && (
+                        <Box sx={{ mt: 2 }}>
+                          {post.tags.slice(0, 3).map((tag) => (
+                            <Chip key={tag} label={tag} size="small" sx={{ mr: 1, mb: 1 }} />
+                          ))}
+                          {post.tags.length > 3 && (
+                            <Typography variant="caption" color="text.secondary">
+                              +{post.tags.length - 3} more
+                            </Typography>
+                          )}
+                        </Box>
+                      )}
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Container>
+      <PeopleCards />
     </>
   );
 };
 
-export default Home; 
+export default Home;
