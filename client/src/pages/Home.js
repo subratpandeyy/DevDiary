@@ -34,7 +34,7 @@ const Home = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (posts.length > 0) {
+    if (Array.isArray(posts) && posts.length > 0) {
       const tags = [...new Set(posts.flatMap(post => post.tags || []))];
       setAllTags(tags);
       setFilteredPosts(posts);
@@ -42,7 +42,7 @@ const Home = () => {
   }, [posts]);
 
   useEffect(() => {
-    let filtered = [...posts];
+    let filtered = Array.isArray(posts) ? [...posts] : [];
     if (searchTerm) {
       filtered = filtered.filter(post =>
         post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -110,7 +110,6 @@ const Home = () => {
 
         <Box sx={{ mb: 4 }}>
           <Box>
-            
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
               {allTags.map((tag) => (
                 <Chip
@@ -151,7 +150,7 @@ const Home = () => {
           {(searchTerm || selectedTags.length > 0) && (
             <Box sx={{ mt: 2, mb: 2 }}>
               <Typography variant="body2" color="text.secondary">
-                Showing {filteredPosts.length} of {posts.length} posts
+                Showing {filteredPosts.length} of {Array.isArray(posts) ? posts.length : 0} posts
               </Typography>
             </Box>
           )}
