@@ -4,12 +4,14 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { protect, restrictTo } = require('../middleware/auth');
+import config from '../../config';
 
 // Create uploads directory if it doesn't exist
 const uploadsDir = path.join(__dirname, '../uploads');
 if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir, { recursive: true });
 }
+
 
 // Configure Multer for local storage
 const storage = multer.diskStorage({
@@ -44,7 +46,7 @@ router.post('/', protect, restrictTo('admin'), upload.single('media'), async (re
         }
 
         // Create a public URL for the file
-        const fileUrl = `/uploads/${req.file.filename}`;
+        const fileUrl = `${config.apiUrl}/uploads/${req.file.filename}`;    // changes made CHECK******
         const publicId = req.file.filename;
 
         res.json({
