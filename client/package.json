@@ -40,5 +40,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://trisonic-backend.onrender.com"
+  "proxy": "http://localhost:5001"
 }
