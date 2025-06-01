@@ -105,7 +105,7 @@ const Home = () => {
             display: 'inline-block',
           }}
         >
-          Dev Diary
+          Articles
         </Typography>
 
         <Box sx={{ mb: 4 }}>
@@ -162,7 +162,13 @@ const Home = () => {
           <Grid container spacing={4}>
             {filteredPosts.map((post) => (
               <Grid item xs={12} sm={6} md={4} key={post._id}>
-                <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', borderRadius: '5px' }}>
+                <Card sx={{ 
+                height: '100%', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                borderRadius: '5px',
+                border: '1px solid rgba(30, 41, 59, 0.9)'
+                 }}>
                   {post.media?.[0]?.type === 'image' && (
                     <CardMedia
                       component="img"

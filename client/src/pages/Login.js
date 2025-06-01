@@ -11,6 +11,7 @@ import {
   Alert,
 } from '@mui/material';
 import { login, clearError } from '../store/slices/authSlice';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -84,6 +85,17 @@ const Login = () => {
             >
               {loading ? 'Logging in...' : 'Login'}
             </Button>
+            <Button
+                sx={{
+                  color: 'white',
+                  display: 'flex',
+                }}
+                // color="inherit"
+                component={RouterLink}
+                to="/admin/register"
+              >
+                Sign up
+              </Button>
           </Box>
         </form>
       </Paper>

@@ -10,10 +10,12 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
 import { logout } from '../store/slices/authSlice';
-import ThemeToggle from './ThemeToggle';
-import trisonic from '../data/trisonic.png';
+// import ThemeToggle from './ThemeToggle';
+import LoginIcon from '@mui/icons-material/Login';
+import BadgeIcon from '@mui/icons-material/Badge';
+import LogoutIcon from '@mui/icons-material/Logout';
+import dev from '../data/dev.png';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -55,18 +57,14 @@ const Navbar = () => {
           to="/"
           sx={{
             flexGrow: 1,
-            textDecoration: 'none',
-            fontSize: '2.5rem',
-            color: 'white',
-            fontWeight: 700,
           }}
         >
-          <img src={trisonic} alt='Logo' style={{ height: 240 }} />
+          <img src={dev} alt='Logo' style={{ height: 200 }} />
         </Typography>
 
-        <Box><ThemeToggle /></Box>
+        {/* <Box><ThemeToggle /></Box> */}
 
-        <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+        <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
           {isAuthenticated ? (
             <>
               {user?.role === 'admin' && (
@@ -76,7 +74,7 @@ const Navbar = () => {
                   to="/admin"
                   sx={{ mr: 2 }}
                 >
-                  Admin Dashboard
+                  <BadgeIcon />
                 </Button>
               )}
               <IconButton
@@ -84,7 +82,7 @@ const Navbar = () => {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
+                <LogoutIcon />
               </IconButton>
               <Menu
                 anchorEl={anchorEl}
@@ -98,27 +96,27 @@ const Navbar = () => {
             <>
               <Button
                 sx={{
-                  color: 'grey',
                   mr: 2,
                   ml: 2,
+                  display: 'flex',
                 }}
-                // color="inherit"
+                color="inherit"
                 component={RouterLink}
                 to="/login"
               >
-                Sign in
+                <LoginIcon />
               </Button>
-              <Button
+              {/* <Button
                 sx={{
                   color: 'white',
-                  // display: 'none',
+                  display: 'none',
                 }}
                 // color="inherit"
                 component={RouterLink}
                 to="/admin/register"
               >
                 Sign up
-              </Button>
+              </Button> */}
             </>
           )}
         </Box>

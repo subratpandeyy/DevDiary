@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, Link } from '@mui/material';
+import { Box, Button, Container, Link } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Navbar from './Navbar';
 import BackToTop from './BackToTop';
@@ -9,6 +9,33 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 
 const Layout = ({ children }) => {
   const theme = useTheme();
+
+  const contributors = [
+    {
+      name: 'Priyanshu Gupta',
+      links: {
+        linkedin: 'https://www.linkedin.com/in/priyanshu-guptaji',
+        x: 'https://x.com/PRIYANSHUG49497',
+        github: 'https://github.com/priyanshu-guptaji',
+      },
+    },
+    {
+      name: 'Sonali Subhadarshini',
+      links: {
+        linkedin: 'https://www.linkedin.com/in/sonali-subhadarshini-sahoo/',
+        x: 'https://x.com/Sonali_0804',
+        github: 'https://github.com/sonalisubhadarshini08',
+      },
+    },
+    {
+      name: 'Subrat Pandey',
+      links: {
+        linkedin: 'https://www.linkedin.com/in/contact-subrat-pandey/',
+        x: 'https://x.com/12SubratPandey',
+        github: 'https://github.com/subratpandeyy',
+      },
+    },
+  ];
 
   return (
     <Box
@@ -46,7 +73,7 @@ const Layout = ({ children }) => {
         {children}
       </Container>
       <BackToTop />
-      
+
       <Box
         component="footer"
         sx={{
@@ -86,98 +113,92 @@ const Layout = ({ children }) => {
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                Trisonic
+                Dev Diary
               </Box>
             </Box>
             
+
             <Box
               sx={{
                 display: 'flex',
-                flexDirection: 'column',
-                gap: { xs: 2, sm: 2 },
+                flexDirection: { xs: 'column' ,sm: 'column', md: 'row' },
+                gap: { xs: 2, sm: 4 },
                 color: theme.palette.text.secondary,
                 fontSize: '0.875rem',
               }}
             >
-              <Box component="span">© 2025 Trisonic</Box>
-              <Box component="span"
-                sx={{
-                  display: 'flex',
-                  gap: { xs: 2, sm: 4 },
-                }}
-              >Priyanshu Gupta
-                <Link href="http://www.linkedin.com/in/priyanshu-guptaji"><LinkedInIcon 
+
+              {contributors.map((contributor) => (
+                <Box
+                  key={contributor.name}
+                  component="span"
                   sx={{
-                    color: 'white',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: { xs: 1, sm: 1 },
                   }}
-                /></Link>
-                <Link href="https://x.com/PRIYANSHUG49497"
-                  sx={{
-                    color: 'white',
-                  }}
-                ><XIcon /></Link>
-                <Link href="https://github.com/priyanshu-guptaji"
-                  sx={{
-                    color: 'white',
-                  }}
-                ><GitHubIcon /></Link>
-              </Box>
-              <Box component="span"
-                sx={{
-                  display: 'flex',
-                  gap: { xs: 2, sm: 4 },
-                }}
-              >Sonali Subhadarshini
-              <Link href="https://www.linkedin.com/in/sonali-subhadarshini-sahoo/"
-                sx={{
-                  color: 'white',
-                }}
-              ><LinkedInIcon /></Link>
-                <Link href="https://x.com/Sonali_0804"
-                  sx={{
-                    color: 'white',
-                  }}
-                ><XIcon /></Link>
-                <Link href="https://github.com/sonalisubhadarshini08"
-                  sx={{
-                    color: 'white',
-                  }}
-                ><GitHubIcon /></Link>
-              </Box>
-              <Box component="span"
-                sx={{
-                  display: 'flex',
-                  gap: { xs: 2, sm: 4 },
-                }}
-              >Subrat Pandey
-              <Link href="https://www.linkedin.com/in/contact-subrat-pandey/"
-                sx={{
-                  color: 'white',
-                }}
-              ><LinkedInIcon /></Link>
-                <Link href="https://x.com/12SubratPandey"
-                  sx={{
-                    color: 'white',
-                  }}
-                ><XIcon /></Link>
-                <Link href="https://github.com/subratpandeyy"
-                  sx={{
-                    color: 'white',
-                  }}
-                ><GitHubIcon /></Link>
-              </Box>
-              <Box component="span"><Link href="mailto:scribbleorgs@gmail.com"
-                sx={{
-                  textDecoration: 'none',
-                }}
-              >Contact us</Link></Box>
+                >
+                  {contributor.name}
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      gap: { xs: 2, sm: 2 },
+                    }}
+                  >
+                    <Link
+                      href={contributor.links.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`LinkedIn - ${contributor.name}`}
+                      sx={{ color: theme.palette.text.primary }}
+                    >
+                      <LinkedInIcon />
+                    </Link>
+                    <Link
+                      href={contributor.links.x}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`X - ${contributor.name}`}
+                      sx={{ color: theme.palette.text.primary }}
+                    >
+                      <XIcon />
+                    </Link>
+                    <Link
+                      href={contributor.links.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`GitHub - ${contributor.name}`}
+                      sx={{ color: theme.palette.text.primary }}
+                    >
+                      <GitHubIcon />
+                    </Link>
+                  </Box>
+                </Box>
+              ))}
               
             </Box>
+            <Box component="span">
+                <Button
+                  href="mailto:scribbleorgs@gmail.com"
+                  sx={{
+                    textDecoration: 'none',
+                    color: '#65bbcf',
+                    fontSize: '15px'
+                  }}
+                >
+                  Contact us
+                </Button>
+              </Box>
           </Box>
+          <Box component="span" 
+            sx={{ fontSize: '12px',
+             }}
+          >© 2025 Dev Diary</Box>
         </Container>
       </Box>
     </Box>
   );
 };
 
-export default Layout; 
+export default Layout;

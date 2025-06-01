@@ -47,8 +47,10 @@ const PostDetail = () => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: {xs: 2, sm: 4}, mb: { xs: 4, sm: 6 }, px: { xs: 0, sm: 3, md: 4 } }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
+    <Container maxWidth="lg" sx={{ mt: {xs: 2, sm: 4}, mb: { xs: 4, sm: 6 }, px: { xs: 0, sm: 3, md: 3 } }}>
+      <Paper elevation={3} sx={{ p: {xs: 2, sm: 2, md: 3},
+          border: '1px solid #3B82F6',
+        }}>
         <Typography variant="h3" component="h1" gutterBottom
           sx={{ xs: '0.75rem', sm: '1rem', md: '2rem' }}
         >
@@ -63,7 +65,6 @@ const PostDetail = () => {
           </Typography>
         </Box>
 
-        
         {post.media && post.media.length > 0 && (
           <Grid container spacing={2} sx={{ mb: 3 }}>
             {post.media.map((item, index) => (

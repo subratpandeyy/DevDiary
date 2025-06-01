@@ -19,14 +19,14 @@ const people = [
   {
     name: 'Subrat Pandey',
     image: subrat,
-    about: 'Being an engineering student, my major is computer science. I adore problem-solving and programming. I have a critical mind and enjoy learning a lot about databases.',
+    about: 'Focused on building smart applications with experience in real world projects. Contributing to community platforms by managing websites.',
   },
 ];
 
 const PeopleCards = () => {
   return (
     <RGBCard>
-    <Box sx={{ padding: 4, 
+    <Box sx={{ padding: 2, 
       background: `linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%)`,
           backdropFilter: 'blur(8px)',
           border: `1px solid rgba(255, 255, 255, 0.1)`,

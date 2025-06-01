@@ -16,7 +16,7 @@ export const createAppTheme = (isDarkMode) => {
       },
       background: {
         default: isDarkMode ? '#0F172A' : '#F8FAFC', // Dark blue-gray : Light gray
-        paper: isDarkMode ? '#1E293B' : '#FFFFFF', // Slightly lighter blue-gray : White
+        paper: isDarkMode ? '#0f0f0f' : '#FFFFFF', // Slightly lighter blue-gray : White
       },
       text: {
         primary: isDarkMode ? '#F8FAFC' : '#1E293B', // Almost white : Dark blue-gray
@@ -92,7 +92,7 @@ export const createAppTheme = (isDarkMode) => {
       MuiButton: {
         styleOverrides: {
           root: {
-            borderRadius: '0.75rem',
+            borderRadius: '5px',
             padding: '0.75rem 1.5rem',
             fontSize: '1rem',
             fontWeight: 600,
@@ -120,7 +120,7 @@ export const createAppTheme = (isDarkMode) => {
       MuiCard: {
         styleOverrides: {
           root: {
-            borderRadius: '1.5rem',
+            borderRadius: '5px',
             background: isDarkMode 
               ? 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.8) 100%)'
               : 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%)',
@@ -176,7 +176,7 @@ export const createAppTheme = (isDarkMode) => {
       },
     },
     shape: {
-      borderRadius: 12,
+      borderRadius: 5,
     },
     spacing: 8,
   });

@@ -4,7 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { protect, restrictTo } = require('../middleware/auth');
-import config from '../../config';
+const config = require('../../client/src/config');
 
 // Create uploads directory if it doesn't exist
 const uploadsDir = path.join(__dirname, '../uploads');
