@@ -91,9 +91,10 @@ const Layout = ({ children }) => {
             sx={{
               display: 'flex',
               flexDirection: { xs: 'column', sm: 'row' },
-              justifyContent: 'space-between',
+              justifyContent: { xs: 'center', md: 'space-between' },
               alignItems: 'center',
               gap: 2,
+              textAlign: 'center',
             }}
           >
             <Box
@@ -117,11 +118,11 @@ const Layout = ({ children }) => {
               </Box>
             </Box>
             
-
             <Box
               sx={{
                 display: 'flex',
                 flexDirection: { xs: 'column' ,sm: 'column', md: 'row' },
+                justifyContent: 'center',
                 gap: { xs: 2, sm: 4 },
                 color: theme.palette.text.secondary,
                 fontSize: '0.875rem',
@@ -143,6 +144,7 @@ const Layout = ({ children }) => {
                     sx={{
                       display: 'flex',
                       flexDirection: 'row',
+                      justifyContent: 'center',
                       gap: { xs: 2, sm: 2 },
                     }}
                   >
@@ -189,12 +191,13 @@ const Layout = ({ children }) => {
                 >
                   Contact us
                 </Button>
+                <Box component="span" 
+            sx={{ fontSize: '12px',
+             }}>
+            © 2025 Dev Diary</Box>
               </Box>
           </Box>
-          <Box component="span" 
-            sx={{ fontSize: '12px',
-             }}
-          >© 2025 Dev Diary</Box>
+          
         </Container>
       </Box>
     </Box>
