@@ -14,6 +14,7 @@ import {
   Select,
   MenuItem,
   Chip,
+  Grid
 } from '@mui/material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -90,21 +91,18 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.title.trim()) {
       alert('Please enter a title');
       return;
     }
-    
+
     if (!formData.content.trim()) {
       alert('Please enter content');
       return;
     }
-    
+
     try {
-      console.log('Submitting post with data:', formData);
-      console.log('Media data:', media);
-      
       const postData = {
         ...formData,
         media: media.map((item) => ({
@@ -113,15 +111,9 @@ const CreatePost = () => {
           public_id: item.public_id,
         })),
       };
-      
-      console.log('Final post data to submit:', postData);
-      
-      const result = await dispatch(createPost(postData)).unwrap();
-      console.log('Post created successfully:', result);
-      
-      // Refresh the posts list
+
+      await dispatch(createPost(postData)).unwrap();
       dispatch(fetchPosts());
-      
       navigate('/admin');
     } catch (error) {
       console.error('Error creating post:', error);
@@ -131,7 +123,7 @@ const CreatePost = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
+      <Paper elevation={3} sx={{ p: { xs: 2, sm: 4 } }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Create New Post
         </Typography>
@@ -143,118 +135,133 @@ const CreatePost = () => {
         )}
 
         <form onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            label="Title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            margin="normal"
-            required
-          />
-
-          <Box sx={{ mt: 2, mb: 2 }}>
-            <ReactQuill
-              ref={quillRef}
-              value={formData.content}
-              onChange={handleEditorChange}
-              style={{ height: '200px', marginBottom: '50px' }}
-              modules={{
-                toolbar: [
-                  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                  ['bold', 'italic', 'underline', 'strike'],
-                  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                  [{ 'color': [] }, { 'background': [] }],
-                  ['link', 'image', 'video'],
-                  ['clean']
-                ]
-              }}
-            />
-          </Box>
-
-          <FormControl fullWidth margin="normal">
-            <InputLabel>Status</InputLabel>
-            <Select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              label="Status"
-            >
-              <MenuItem value="draft">Draft</MenuItem>
-              <MenuItem value="published">Published</MenuItem>
-            </Select>
-          </FormControl>
-
-          <TextField
-            fullWidth
-            label="Add Tags"
-            value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
-            onKeyDown={handleTagInputKeyDown}
-            margin="normal"
-            helperText="Press Enter to add a tag"
-          />
-
-          <Box sx={{ mt: 1, mb: 2 }}>
-            {formData.tags.map((tag) => (
-              <Chip
-                key={tag}
-                label={tag}
-                onDelete={() => handleDeleteTag(tag)}
-                sx={{ mr: 1, mb: 1 }}
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Title"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                margin="normal"
+                required
               />
-            ))}
-          </Box>
+            </Grid>
 
-          <Button
-            variant="contained"
-            component="label"
-            sx={{ mt: 2, mb: 2 }}
-          >
-            Upload Media
-            <input
-              type="file"
-              hidden
-              multiple
-              accept="image/*,video/*"
-              onChange={handleFileUpload}
-            />
-          </Button>
+            <Grid item xs={12} paddingBottom={8}>
+              <ReactQuill
+                ref={quillRef}
+                value={formData.content}
+                onChange={handleEditorChange}
+                style={{ height: '200px', marginBottom: '50px' }}
+                modules={{
+                  toolbar: [
+                    [{ header: [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    [{ color: [] }, { background: [] }],
+                    ['link', 'image', 'video'],
+                    ['clean'],
+                  ],
+                }}
+              />
+            </Grid>
 
-          <Box sx={{ mt: 2, mb: 2 }}>
-            {media.map((item, index) => (
-              <Box key={index} sx={{ mt: 1 }}>
-                {item.type === 'image' ? (
-                  <img
-                    src={item.url}
-                    alt={`Uploaded ${index + 1}`}
-                    style={{ maxWidth: '200px', marginRight: '10px' }}
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Status</InputLabel>
+                <Select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleChange}
+                  label="Status"
+                >
+                  <MenuItem value="draft">Draft</MenuItem>
+                  <MenuItem value="published">Published</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Add Tags"
+                value={tagInput}
+                onChange={(e) => setTagInput(e.target.value)}
+                onKeyDown={handleTagInputKeyDown}
+                margin="normal"
+                helperText="Press Enter to add a tag"
+              />
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {formData.tags.map((tag) => (
+                  <Chip
+                    key={tag}
+                    label={tag}
+                    onDelete={() => handleDeleteTag(tag)}
                   />
-                ) : (
-                  <video
-                    src={item.url}
-                    controls
-                    style={{ maxWidth: '200px', marginRight: '10px' }}
-                  />
-                )}
+                ))}
               </Box>
-            ))}
-          </Box>
+            </Grid>
 
-          <Box sx={{ mt: 3 }}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={loading}
-            >
-              {loading ? 'Creating...' : 'Create Post'}
-            </Button>
-          </Box>
+            <Grid item xs={12}>
+              <Button variant="contained" component="label">
+                Upload Media
+                <input
+                  type="file"
+                  hidden
+                  multiple
+                  accept="image/*,video/*"
+                  onChange={handleFileUpload}
+                />
+              </Button>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 2,
+                  mt: 2,
+                }}
+              >
+                {media.map((item, index) => (
+                  <Box key={index} sx={{ maxWidth: 200 }}>
+                    {item.type === 'image' ? (
+                      <img
+                        src={item.url}
+                        alt={`Uploaded ${index + 1}`}
+                        style={{ width: '100%', borderRadius: '8px' }}
+                      />
+                    ) : (
+                      <video
+                        src={item.url}
+                        controls
+                        style={{ width: '100%', borderRadius: '8px' }}
+                      />
+                    )}
+                  </Box>
+                ))}
+              </Box>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={loading}
+                fullWidth
+                sx={{ mt: 2 }}
+              >
+                {loading ? 'Creating...' : 'Create Post'}
+              </Button>
+            </Grid>
+          </Grid>
         </form>
       </Paper>
     </Container>
   );
 };
 
-export default CreatePost; 
+export default CreatePost;

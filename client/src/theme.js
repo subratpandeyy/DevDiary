@@ -122,7 +122,8 @@ export const createAppTheme = (isDarkMode) => {
           root: {
             borderRadius: '5px',
             background: isDarkMode 
-              ? 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.8) 100%)'
+              // ? 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.8) 100%)'
+              ? 'linear-gradient(135deg, #0f0f0f 0%, #0F172A 100%)'
               : 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%)',
             backdropFilter: 'blur(8px)',
             boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
@@ -153,14 +154,14 @@ export const createAppTheme = (isDarkMode) => {
       },
       MuiContainer: {
         styleOverrides: {
-          root: {
-            paddingLeft: '2rem',
-            paddingRight: '2rem',
-            '@media (min-width: 600px)': {
-              paddingLeft: '3rem',
-              paddingRight: '3rem',
-            },
-          },
+          // root: {
+          //   paddingLeft: '2rem',
+          //   paddingRight: '2rem',
+          //   '@media (min-width: 600px)': {
+          //     paddingLeft: '3rem',
+          //     paddingRight: '3rem',
+          //   },
+          // },
         },
       },
       MuiAppBar: {

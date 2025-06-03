@@ -84,21 +84,21 @@ const EditPost = () => {
 
   const handleFileUpload = async (e) => {
     const files = Array.from(e.target.files);
-    const formData = new FormData();
+    const fileFormData = new FormData();
 
-    for (const file of files) {
-      formData.append('media', file);
-    }
+    files.forEach((file) => {
+      fileFormData.append('media', file);
+    });
 
     try {
-      const { data } = await axios.post('/api/upload', formData, {
+      const { data } = await axios.post('/api/upload', fileFormData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
 
-      setMedia([...media, data]);
+      setMedia((prevMedia) => [...prevMedia, ...(Array.isArray(data) ? data : [data])]);
     } catch (error) {
       console.error('Error uploading file:', error);
     }
@@ -142,7 +142,7 @@ const EditPost = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
+      <Paper elevation={3} sx={{ p: { xs: 2, md: 4 } }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Edit Post
         </Typography>
@@ -164,7 +164,7 @@ const EditPost = () => {
             required
           />
 
-          <Box sx={{ mt: 2, mb: 2 }}>
+          <Box sx={{ mt: 2, mb: 2, pb: 8 }}>
             <ReactQuill
               ref={quillRef}
               value={formData.content}
@@ -172,13 +172,13 @@ const EditPost = () => {
               style={{ height: '200px', marginBottom: '50px' }}
               modules={{
                 toolbar: [
-                  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                  [{ header: [1, 2, 3, 4, 5, 6, false] }],
                   ['bold', 'italic', 'underline', 'strike'],
-                  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                  [{ 'color': [] }, { 'background': [] }],
+                  [{ list: 'ordered' }, { list: 'bullet' }],
+                  [{ color: [] }, { background: [] }],
                   ['link', 'image', 'video'],
-                  ['clean']
-                ]
+                  ['clean'],
+                ],
               }}
             />
           </Box>
@@ -206,13 +206,20 @@ const EditPost = () => {
             helperText="Press Enter to add a tag"
           />
 
-          <Box sx={{ mt: 1, mb: 2 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 1,
+              mt: 1,
+              mb: 2,
+            }}
+          >
             {formData.tags.map((tag) => (
               <Chip
                 key={tag}
                 label={tag}
                 onDelete={() => handleDeleteTag(tag)}
-                sx={{ mr: 1, mb: 1 }}
               />
             ))}
           </Box>
@@ -232,27 +239,55 @@ const EditPost = () => {
             />
           </Button>
 
-          <Box sx={{ mt: 2, mb: 2 }}>
+          <Box
+            sx={{
+              mt: 2,
+              mb: 2,
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 2,
+            }}
+          >
             {media.map((item, index) => (
-              <Box key={index} sx={{ mt: 1, position: 'relative', display: 'inline-block' }}>
+              <Box
+                key={index}
+                sx={{
+                  position: 'relative',
+                  width: { xs: '100%', sm: '48%', md: '30%' },
+                  maxWidth: 300,
+                }}
+              >
                 {item.type === 'image' ? (
                   <img
                     src={item.url}
                     alt={`Uploaded ${index + 1}`}
-                    style={{ maxWidth: '200px', marginRight: '10px' }}
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      borderRadius: 8,
+                    }}
                   />
                 ) : (
                   <video
                     src={item.url}
                     controls
-                    style={{ maxWidth: '200px', marginRight: '10px' }}
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      borderRadius: 8,
+                    }}
                   />
                 )}
                 <Button
                   size="small"
                   color="error"
                   onClick={() => handleDeleteMedia(item.public_id)}
-                  sx={{ position: 'absolute', top: 0, right: 0 }}
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    minWidth: 'fit-content',
+                  }}
                 >
                   Delete
                 </Button>
@@ -260,7 +295,7 @@ const EditPost = () => {
             ))}
           </Box>
 
-          <Box sx={{ mt: 3 }}>
+          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-start' }}>
             <Button
               type="submit"
               variant="contained"
@@ -276,4 +311,4 @@ const EditPost = () => {
   );
 };
 
-export default EditPost; 
+export default EditPost;
