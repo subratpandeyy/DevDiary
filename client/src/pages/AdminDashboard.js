@@ -14,12 +14,13 @@ import {
   Paper,
   IconButton,
   Box,
-  CircularProgress,
   Alert,
   Chip,
 } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon, Refresh as RefreshIcon } from '@mui/icons-material';
 import { fetchPosts, deletePost } from '../store/slices/postSlice';
+import Loader from '../components/Loader';
+
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const AdminDashboard = () => {
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">
-        <CircularProgress />
+        <Loader />
       </Box>
     );
   }

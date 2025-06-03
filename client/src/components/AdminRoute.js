@@ -1,7 +1,8 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Box, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
+import Loader from '../components/Loader';
 
 const AdminRoute = ({ children }) => {
   const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
@@ -9,7 +10,7 @@ const AdminRoute = ({ children }) => {
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">
-        <CircularProgress />
+        <Loader />
       </Box>
     );
   }

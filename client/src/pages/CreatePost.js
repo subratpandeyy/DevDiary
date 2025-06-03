@@ -153,7 +153,7 @@ const CreatePost = () => {
                 ref={quillRef}
                 value={formData.content}
                 onChange={handleEditorChange}
-                style={{ height: '200px', marginBottom: '50px' }}
+                style={{ height: '250px', marginBottom: '50px' }}
                 modules={{
                   toolbar: [
                     [{ header: [1, 2, 3, false] }],
@@ -252,7 +252,6 @@ const CreatePost = () => {
                 color="primary"
                 disabled={loading}
                 fullWidth
-                sx={{ mt: 2 }}
               >
                 {loading ? 'Creating...' : 'Create Post'}
               </Button>

@@ -11,7 +11,6 @@ import {
   CardActionArea,
   Box,
   Chip,
-  CircularProgress,
   Alert,
   TextField,
   InputAdornment,
@@ -20,6 +19,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import { fetchPosts } from '../store/slices/postSlice';
 import PeopleCards from '../components/PeopleCards';
+import Loader from '../components/Loader';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -76,7 +76,7 @@ const Home = () => {
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">
-        <CircularProgress />
+        <Loader />
       </Box>
     );
   }
@@ -91,7 +91,7 @@ const Home = () => {
 
   return (
     <>
-      <Container maxWidth="lg" sx={{ mt: { xs: 2, sm: 4 }, mb: { xs: 4, sm: 6 }, px: { xs: 2, sm: 3, md: 4 } }}>
+      <Container maxWidth="lg" sx={{ mt: { xs: 2, sm: 4 }, mb: { xs: 4, sm: 6 }, px: { xs: 0, sm: 3, md: 4 } }}>
         <Typography
           variant="h3"
           component="h1"
@@ -159,11 +159,13 @@ const Home = () => {
         {filteredPosts.length === 0 ? (
           <Alert severity="info">No posts match your search criteria.</Alert>
         ) : (
-          <Grid container spacing={4}>
+          <Grid container 
+            spacing={2}
+          >
             {filteredPosts.map((post) => (
               <Grid item xs={12} sm={6} md={4} key={post._id}>
                 <Card sx={{ 
-                height: '300px', 
+                height: '300px',
                 display: 'flex', 
                 flexDirection: 'column', 
                 borderRadius: '5px',
@@ -186,7 +188,7 @@ const Home = () => {
                       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                         By {post.author?.username} • {new Date(post.createdAt).toLocaleDateString()}
                       </Typography>
-                      <Typography
+                      <Typography     // body of posts
                         variant="body2"
                         color="text.secondary"
                         sx={{

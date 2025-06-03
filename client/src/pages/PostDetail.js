@@ -7,11 +7,12 @@ import {
   Typography,
   Box,
   Chip,
-  CircularProgress,
   Alert,
   Grid,
 } from '@mui/material';
 import { fetchPost } from '../store/slices/postSlice';
+import Loader from '../components/Loader';
+
 
 const PostDetail = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const PostDetail = () => {
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">
-        <CircularProgress />
+        <Loader />
       </Box>
     );
   }

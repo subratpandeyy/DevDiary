@@ -46,7 +46,8 @@ const Navbar = () => {
           mb: -3,
           height: 90,
           background: 
-              'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%)',
+              // 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%)',
+              'linear-gradient(#0f0f0f 0%, #0F172A 100%)',
           backdropFilter: 'blur(8px)',
           borderBottom: `1px solid rgba(255, 255, 255, 0.1)`,
         }}
@@ -64,7 +65,7 @@ const Navbar = () => {
 
         {/* <Box><ThemeToggle /></Box> */}
 
-        <Box sx={{ display: { xs: 'flex', sm: 'flex' } }}>
+        <Box sx={{ display: { xs: 'flex', sm: 'flex' }, gap: { xs: '4px', sm: '6px' } }}>
           {isAuthenticated ? (
             <>
               {user?.role === 'admin' && (
@@ -72,7 +73,6 @@ const Navbar = () => {
                   color="inherit"
                   component={RouterLink}
                   to="/admin"
-                  sx={{ mr: 2 }}
                 >
                   <BadgeIcon />
                 </Button>

@@ -6,6 +6,11 @@ import priyanshu from '../data/priyanshu.jpg';
 import RGBCard from './RGBCard';
 
 const people = [
+  {
+    name: 'Subrat Pandey',
+    image: subrat,
+    about: 'Focused on building smart applications with experience in real world projects. Contributing to community platforms by managing websites.',
+  },
     {
         name: 'Priyanshu Gupta',
         image: priyanshu,
@@ -16,11 +21,7 @@ const people = [
     image: sonali,
     about: 'A student deeply passionate about Computer Science and truly enjoy the challenge of debugging code. Interests in UI/UX design.',
   },
-  {
-    name: 'Subrat Pandey',
-    image: subrat,
-    about: 'Focused on building smart applications with experience in real world projects. Contributing to community platforms by managing websites.',
-  },
+  
 ];
 
 const PeopleCards = () => {

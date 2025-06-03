@@ -14,11 +14,12 @@ import {
   Select,
   MenuItem,
   Chip,
-  CircularProgress,
 } from '@mui/material';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { fetchPost, updatePost } from '../store/slices/postSlice';
+import Loader from '../components/Loader';
+
 import axios from 'axios';
 
 const EditPost = () => {
@@ -135,7 +136,7 @@ const EditPost = () => {
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">
-        <CircularProgress />
+        <Loader />
       </Box>
     );
   }
@@ -169,7 +170,7 @@ const EditPost = () => {
               ref={quillRef}
               value={formData.content}
               onChange={handleEditorChange}
-              style={{ height: '200px', marginBottom: '50px' }}
+              style={{ height: '250px', marginBottom: '50px' }}
               modules={{
                 toolbar: [
                   [{ header: [1, 2, 3, 4, 5, 6, false] }],

@@ -120,7 +120,7 @@ export const createAppTheme = (isDarkMode) => {
       MuiCard: {
         styleOverrides: {
           root: {
-            borderRadius: '5px',
+            // borderRadius: '5px',
             background: isDarkMode 
               // ? 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.8) 100%)'
               ? 'linear-gradient(135deg, #0f0f0f 0%, #0F172A 100%)'
@@ -128,10 +128,10 @@ export const createAppTheme = (isDarkMode) => {
             backdropFilter: 'blur(8px)',
             boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
             transition: 'all 0.3s ease-in-out',
-            '&:hover': {
-              transform: 'translateY(-4px)',
-              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2)',
-            },
+            // '&:hover': {
+            //   transform: 'translateY(-4px)',
+            //   boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2)',
+            // },
           },
         },
       },
@@ -154,14 +154,14 @@ export const createAppTheme = (isDarkMode) => {
       },
       MuiContainer: {
         styleOverrides: {
-          // root: {
-          //   paddingLeft: '2rem',
-          //   paddingRight: '2rem',
-          //   '@media (min-width: 600px)': {
-          //     paddingLeft: '3rem',
-          //     paddingRight: '3rem',
-          //   },
-          // },
+          root: {
+            paddingLeft: '2px',
+            paddingRight: '2px',
+            '@media (min-width: 600px)': {
+              paddingLeft: '2px',
+              paddingRight: '2px',
+            },
+          },
         },
       },
       MuiAppBar: {
